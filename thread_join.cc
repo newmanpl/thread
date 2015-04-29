@@ -20,28 +20,28 @@ typedef struct {
 
 void *PrintHello(void *threadarg)
 {
-	thread_data *my_data;
-    my_data = (thread_data *) threadarg;
-    int timeout = my_data->timeout;
+  thread_data *my_data;
+  my_data = (thread_data *) threadarg;
+  int timeout = my_data->timeout;
 
-    timeval t1, t2;
-    double elapsedTime, prev_elapsedTime;
-    prev_elapsedTime = 0;
+  timeval t1, t2;
+  double elapsedTime, prev_elapsedTime;
+  prev_elapsedTime = 0;
         // start timer
-    gettimeofday(&t1, NULL);
-    do {
-    	gettimeofday(&t2, NULL);
+  gettimeofday(&t1, NULL);
+  do {
+    gettimeofday(&t2, NULL);
 
-    	elapsedTime = (t2.tv_sec - t1.tv_sec);
-    	if (elapsedTime != prev_elapsedTime) {
-    	  std::cout<<"elapsedTime = "<<elapsedTime<<std::endl;
-    	  prev_elapsedTime = elapsedTime;
-    	}
-    }while(elapsedTime < timeout);
+    elapsedTime = (t2.tv_sec - t1.tv_sec);
+    if (elapsedTime != prev_elapsedTime) {
+      std::cout<<"elapsedTime = "<<elapsedTime<<std::endl;
+      prev_elapsedTime = elapsedTime;
+    }
+  }while(elapsedTime < timeout);
 
-   cout << "!!! Thread ID : " << my_data->thread_id <<endl;
-   my_data->message = (char*)"new message";
-   (*my_data->callback)(my_data);
+  cout << "!!! Thread ID : " << my_data->thread_id <<endl;
+  my_data->message = (char*)"new message";
+  (*my_data->callback)(my_data);
 }
 
 void callback_impl(void* data) {
